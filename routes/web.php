@@ -22,10 +22,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// se si sscrivono dei middleware o dei metodi prima della funz group vengono applicati a tutto il gruppo
+// in uestpo caso le 3 rotte sarebbero profile.edit , profile.update, profile. destroy
+Route::middleware('auth')->name('profile.')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('destroy');
 });
 
 require __DIR__.'/auth.php';
