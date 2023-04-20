@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +25,12 @@ Route::get('/dashboard', function () {
 
 // se si sscrivono dei middleware o dei metodi prima della funz group vengono applicati a tutto il gruppo
 // in uestpo caso le 3 rotte sarebbero profile.edit , profile.update, profile. destroy
-Route::middleware('auth')->name('profile.')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('destroy');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('projects', ProjectController::class);
 });
 
 require __DIR__.'/auth.php';
