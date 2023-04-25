@@ -30,7 +30,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('projects', ProjectController::class);
+    // rotta aggiuntiva della risorsa per gestire soft_delete (aggiungere sempre prima le rotte aggiuntive)
+    Route::post('/projects/{project:slug}/restore', [ProjectController::class, 'restore'])->name('projects.restore')->withTrashed();
+
+    // Resource route di project
+    Route::resource('projects', ProjectController::class)->parameters([
+        'projects' => 'project:slug'
+    ])->withTrashed(['show','destroy']);
 });
 
 require __DIR__.'/auth.php';

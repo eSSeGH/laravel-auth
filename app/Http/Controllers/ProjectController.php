@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -15,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::withTrashed()->get();
 
         return view('projects.index', compact('projects'));
     }
@@ -38,7 +39,13 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $data['slug'] = Str::slug( $data['title'] );
+
+        $project = Project::create($data);
+
+        return to_route('projects.show', $project);
     }
 
     /**
@@ -50,6 +57,25 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         return view('projects.show', compact('project'));
+    }
+
+     /**
+     * Restore the specified resource.
+     *
+     * @param  \App\Models\Project  $project
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Project $project)
+    {
+
+        if ($project->trashed()) {
+            $project->restore();
+        }
+
+        // uesta funzione helpers 'back()' ci rimanda indietro alla pagina nella uale abbiamo invocato il restore
+        // in uesto caso è utile perchè abbiamo un pulsante restore sia nella pagina index che nella pagina 
+        // show, e uindi non importa dove lo clicchiamo: ritorneremo alla pagina dove lo abbiamo cliccato
+        return back();
     }
 
     /**
@@ -72,7 +98,13 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $data = $request->validated();
+
+        $data['slug'] = Str::slug( $data['title'] );
+
+        $project->update();
+
+        return to_route('projects.show', $project);
     }
 
     /**
@@ -83,7 +115,13 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $project->delete();
+        if($project->trashed()) {
+            $project->forceDelete();
+            // eliminazione definitiva
+        } else {
+            $project->delete(); 
+            // eliminazione soft
+        }
 
         return to_route('projects.index');
     }

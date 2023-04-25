@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProjectRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,15 @@ class UpdateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            // le regole per l'update sono diverse: infatti bisognerà controllare che il tiolo del progetto
+            // sia unico ma escludendo il nome del post che stia modificando perchè è ovvio che c'è già
+            'title' => ['required',
+                'max:150',
+                Rule::unique('projects','title')->ignore($this->project)
+            ],
+            'description' => 'nullable|string',
+            'client_name' => 'required|regex:/Sig\.r?a? [A-Z][.]*/',
+            'client_tel' => 'required|regex:/3[34][0-9]{8}/'
         ];
     }
 }

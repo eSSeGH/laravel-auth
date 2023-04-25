@@ -13,7 +13,9 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        // ui va la logica che gestisce le autorizzazioni per creare un nuovo progetto, ad esempio non 
+        // può creare un progetto se non è registrato sul sito ed altro
+        return true;
     }
 
     /**
@@ -24,7 +26,10 @@ class StoreProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:150|unique:projects,title',
+            'description' => 'nullable|string',
+            'client_name' => 'required|regex:/Sig\.r?a? [A-Z][.]*/',
+            'client_tel' => 'required|regex:/3[34][0-9]{8}/'
         ];
     }
 }

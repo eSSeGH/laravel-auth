@@ -9,4 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Project extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'client_name',
+        'client_tel',
+        'slug'
+    ];
 }

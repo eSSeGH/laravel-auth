@@ -7,17 +7,42 @@
 
     <div class="card mx-auto mt-5">
         <div class="card-body">
-            <h3 class="card-title">{{$project['title']}}</h5>
+            <h2 class="card-title" style="color: cornflowerblue;">{{$project['title']}}</h2>
             <h4 class="card-text">Descrizione: 
                 <p style="font-size: 0.8rem;">{{ $project['description']}}</p>
             </h4>
-            <h4 class="card-text">Prezzo: 
-                <span style="font-size: 0.8rem;">{{ $project['client_name'] }} $</span>
+            <h4 class="card-text">Nome Cliente: 
+                <span style="font-size: 0.8rem;">{{ $project['client_name'] }} </span>
             </h4>
-            <h4 class="card-text">Serie: 
+            <h4 class="card-text">Numero di Telefono: 
                 <span style="font-size: 0.8rem;">{{ $project['client_tel'] }}</span>
             </h4>
-            <a href="{{ route('projects.edit', $project) }}" class="btn btn-primary">Modifica</a>
+
+            <div class="options-btn d-flex justify-content-center">
+                <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning btn-sm me-1">EDIT</a>
+
+                @if(!$project->trashed())
+                    <form class="me-1" action="{{ route('projects.destroy', $project) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit"  class="delete-btn btn btn-danger btn-sm" value="DELETE">
+                    </form>
+                @endif
+
+                @if($project->trashed())
+                    <form class="me-1" action="{{ route('projects.destroy', $project) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit"  class="delete-btn btn btn-danger btn-sm" value="DEL. DEFINITIVELY">
+                    </form>
+
+                    <form class="me-1" action="{{ route('projects.restore', $project) }}" method="POST">
+                        @csrf
+                        <input type="submit"  class="delete-btn btn btn-success btn-sm" value="RESTORE">
+                    </form>
+                @endif
+            
+            </div>
         </div>
     </div>
 

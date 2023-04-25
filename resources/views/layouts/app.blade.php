@@ -49,7 +49,13 @@
 
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('projects.index') }}">{{ __('Projects') }}</a>
+                                <a class="nav-link" href="{{ route('projects.index') }}">{{ __('Progetti') }}</a>
+                            </li>
+                        @endauth
+
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('projects.create') }}">{{ __('Crea un nuovo progetto') }}</a>
                             </li>
                         @endauth
                     </ul>
