@@ -24,7 +24,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // se si sscrivono dei middleware o dei metodi prima della funz group vengono applicati a tutto il gruppo
-// in uestpo caso le 3 rotte sarebbero profile.edit , profile.update, profile. destroy
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

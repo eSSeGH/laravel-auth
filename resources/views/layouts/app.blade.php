@@ -50,12 +50,12 @@
                         @auth
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('projects.index') }}">{{ __('Progetti') }}</a>
-                            </li>
-                        @endauth
-
-                        @auth
+                            </li>                      
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('projects.create') }}">{{ __('Crea un nuovo progetto') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('projects.index', ['trashed' => true]) }}">{{ __('Cestino') }}</a>
                             </li>
                         @endauth
                     </ul>

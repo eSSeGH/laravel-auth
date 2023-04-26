@@ -17,6 +17,18 @@
             <h4 class="card-text">Numero di Telefono: 
                 <span style="font-size: 0.8rem;">{{ $project['client_tel'] }}</span>
             </h4>
+            <h4 class="card-text">Creato il: 
+                <span style="font-size: 0.8rem;">{{ $project['created_at']->format('d/m/Y') }}</span>
+            </h4>
+            <h4 class="card-text">Aggiornato il: 
+                <span style="font-size: 0.8rem;">{{ $project['updated_at']->format('d/m/Y') }}</span>
+            </h4>
+
+            @if($project->trashed())
+                <h4 class="card-text">Eliminato il: 
+                    <span style="font-size: 0.8rem;">{{ $project->deleted_at->format('d/m/Y') }}</span>
+                </h4>
+            @endif
 
             <div class="options-btn d-flex justify-content-center">
                 <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning btn-sm me-1">EDIT</a>

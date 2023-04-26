@@ -14,6 +14,8 @@
                     <th scope="col">Descrizione</th>
                     <th scope="col">Nome Cliente</th>
                     <th scope="col">Telefono Cliente</th>
+                    <th scope="col">Creato</th>
+                    <th scope="col">Aggiornato</th>
                     <th scope="col">Eliminato</th>
                     <th scope="col">Opzioni</th>
                 </tr>
@@ -29,7 +31,9 @@
                     <td>{{ $project->description }}</td>                   
                     <td>{{ $project->client_name }}</td>
                     <td>{{ $project->client_tel }}</td>
-                    <td>{{ $project->trashed() ? $project->deleted_at : '' }}</td>
+                    <td>{{ $project->created_at->format('d/m/Y') }}</td>
+                    <td>{{ $project->updated_at->format('d/m/Y') }}</td>
+                    <td>{{ $project->trashed() ? $project->deleted_at->format('d/m/Y') : '' }}</td>
 
                     <td class="btn-td" >
                         <a href="{{ route('projects.edit', $project) }}" class="edit-btn btn btn-warning btn-sm mb-1">EDIT</a>
