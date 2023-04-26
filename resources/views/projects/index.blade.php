@@ -18,7 +18,8 @@
             <thead>
                 <tr>          
                     <th scope="col">Titolo</th>
-                    <th scope="col">Descrizione</th>
+                    <th scope="col">Tipologia</th>
+                    <th scope="col">Descrizione</th>               
                     <th scope="col">Nome Cliente</th>
                     <th scope="col">Telefono Cliente</th>
                     <th scope="col">Creato</th>
@@ -35,7 +36,12 @@
                         {{ $project->title }} <br>
                         <a href="{{ route('projects.show', $project['slug']) }}">Vai al progetto</a>
                     </td>
-                    <td>{{ $project->description }}</td>                   
+
+                    {{-- laravel ci permette di utilizare il metodo definito nel modo come se fosse un attributo --}}
+                    <td>{{ $project->type ? $project->type->name : '-'}}</td>
+
+
+                    <td>{{ $project->description }}</td>                     
                     <td>{{ $project->client_name }}</td>
                     <td>{{ $project->client_tel }}</td>
                     <td>{{ $project->created_at->format('d/m/Y') }}</td>
