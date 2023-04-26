@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\Type;
 
 class ProjectController extends Controller
 {
@@ -39,7 +40,9 @@ class ProjectController extends Controller
     {
         $num_of_trashed = Project::onlyTrashed()->count();
 
-        return view('projects.create', compact('num_of_trashed'));
+        $types = Type::orderBy('name', 'asc')->get();
+
+        return view('projects.create', compact('num_of_trashed', 'types'));
     }
 
     /**

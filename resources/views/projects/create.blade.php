@@ -24,6 +24,23 @@
                             </div>
                         @enderror
                     </div>
+
+                    <div class="mb-3">
+                        <label for="type-id" class="form-label">Tipologia:</label>
+                        <select class="form-select @error('type_id') is-invalid @enderror" name="type_id" id="type-id" value="{{ old('type_id') }}">
+                            <option value="" selected>Seleziona tipologia</option>
+                            @foreach($types as $type)
+                                <option @selected( old('type_id') == $type->id ) value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+                        
+                        @error('type_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrizione:</label>
                         <textarea type="text" class="form-control @error('description') is-invalid @enderror" name="description" id="description">
@@ -35,6 +52,7 @@
                             </div>
                         @enderror
                     </div>
+
                     <div class="mb-3">
                         <label for="client_name" class="form-label">Cliente:</label>
                         <input type="text" class="form-control @error('client_name') is-invalid @enderror" name="client_name" id="client_name" value="{{ old('client_name') }}">
@@ -44,6 +62,7 @@
                             </div>
                         @enderror
                     </div>
+
                     <div class="mb-3">
                         <label for="client_tel" class="form-label">Telefono cliente:</label>
                         <input type="text" class="form-control @error('client_tel') is-invalid @enderror" name="client_tel" id="client_tel" value="{{ old('client_tel') }}">
@@ -53,8 +72,6 @@
                             </div>
                         @enderror
                     </div>
-
-            
 
                     <div class="btn-parent d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary mx-auto">Salva</button>
