@@ -17,7 +17,9 @@ use App\Models\Project;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $num_of_trashed = Project::onlyTrashed()->count();
+
+    return view('welcome', compact('num_of_trashed'));
 });
 
 Route::get('/dashboard', function () {
