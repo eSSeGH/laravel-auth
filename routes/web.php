@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
+use App\Models\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $num_of_trashed = Project::onlyTrashed()->count();
+
+    return view('dashboard', compact('num_of_trashed'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // se si sscrivono dei middleware o dei metodi prima della funz group vengono applicati a tutto il gruppo

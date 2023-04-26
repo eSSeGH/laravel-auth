@@ -55,7 +55,7 @@
                                 <a class="nav-link" href="{{ route('projects.create') }}">{{ __('Crea un nuovo progetto') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('projects.index', ['trashed' => true]) }}">{{ __('Cestino') }}</a>
+                                <a class="nav-link" href="{{ route('projects.index', ['trashed' => true]) }}">Cestino: ({{ $num_of_trashed }})</a>
                             </li>
                         @endauth
                     </ul>

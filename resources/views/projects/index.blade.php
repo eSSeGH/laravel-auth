@@ -7,6 +7,13 @@
 
     <div class="container">
 
+        @if($trashed = true)
+        <h1>Tutti i progetti eliminati</h1>
+        @else
+        <h1>Tutti i progetti</h1>
+        @endif
+
+
         <table class="table main-table">
             <thead>
                 <tr>          

@@ -25,7 +25,9 @@ class ProjectController extends Controller
             $projects = Project::all();
         }
 
-        return view('projects.index', compact('projects'));
+        $num_of_trashed = Project::onlyTrashed()->count();
+
+        return view('projects.index', compact('projects', 'num_of_trashed'));
     }
 
     /**
@@ -35,7 +37,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        $num_of_trashed = Project::onlyTrashed()->count();
+
+        return view('projects.create', compact('num_of_trashed'));
     }
 
     /**
@@ -63,7 +67,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('projects.show', compact('project'));
+        $num_of_trashed = Project::onlyTrashed()->count();
+
+        return view('projects.show', compact('project', 'num_of_trashed'));
     }
 
      /**
@@ -93,7 +99,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('projects.edit', compact('project'));
+        $num_of_trashed = Project::onlyTrashed()->count();
+
+        return view('projects.edit', compact('project', 'num_of_trashed'));
     }
 
     /**
@@ -130,6 +138,6 @@ class ProjectController extends Controller
             // eliminazione soft
         }
 
-        return to_route('projects.index');
+        return back();
     }
 }
