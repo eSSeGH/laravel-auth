@@ -7,7 +7,15 @@
 
     <div class="card mx-auto mt-5">
         <div class="card-body">
-            <h2 class="card-title" style="color: cornflowerblue;">{{$project['title']}}</h2>
+            <h2 class="card-title" style="color: cornflowerblue;">
+                {{$project['title']}}
+                @if($project->type)
+                    <span class="badge rounded-pill bg-warning">{{ $project->type->name }}</span>
+                @else
+                    <span class="badge rounded-pill bg-warning">nessuna categoria</span>
+                @endif
+            </h2>
+            
             <h4 class="card-text">Descrizione: 
                 <p style="font-size: 0.8rem;">{{ $project['description']}}</p>
             </h4>

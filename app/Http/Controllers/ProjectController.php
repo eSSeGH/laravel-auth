@@ -104,7 +104,9 @@ class ProjectController extends Controller
     {
         $num_of_trashed = Project::onlyTrashed()->count();
 
-        return view('projects.edit', compact('project', 'num_of_trashed'));
+        $types = Type::orderBy('name', 'asc')->get();
+
+        return view('projects.edit', compact('project', 'num_of_trashed', 'types'));
     }
 
     /**
